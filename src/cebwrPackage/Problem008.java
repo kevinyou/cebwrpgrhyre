@@ -15,7 +15,7 @@ public class Problem008 {
 		BufferedWriter output = new BufferedWriter(fstream);
 		
 		int length = 1000;
-		int greatest = 0;
+		long greatest = 0;
 		int position = 0;
 		int[] digits = new int[length];
 		
@@ -27,13 +27,11 @@ public class Problem008 {
 			}
 		}
 		
-		for (int q = 0; q < length - 2; q++) {
-			if (digits[q] == 0 || digits[q + 1] == 0 || digits[q + 2] == 0 || digits[q + 3] == 0 || digits[q + 4] == 0)
-				continue;
-			else {
-				int product = digits[q] * digits[q + 1] * digits[q + 2] * digits[q + 3] * digits[q + 4];
-				if (product > greatest)
-					greatest = product;
+		for (int i = 0; i < length - 13; i++)
+		{
+			if(!hasZeroes(i, digits))
+			{
+				greatest = Math.max(greatest, compute(i, digits));
 			}
 		}
 		
@@ -42,6 +40,22 @@ public class Problem008 {
 		output.write("" + greatest); // Add to output
 		
 		output.close(); // End output
+	}
+	
+	public static boolean hasZeroes(int index, int[] digits)
+	{
+		for (int i = index; i < index + 13; i++)
+			if (digits[i] == 0)
+				return true;
+		return false;
+	}
+	
+	public static long compute(int index, int[] digits)
+	{
+		long product = 1;
+		for (int i = index; i < index + 13; i++)
+			product *= digits[i];
+		return product;
 	}
 
 }

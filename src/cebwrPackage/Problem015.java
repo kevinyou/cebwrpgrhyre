@@ -1,21 +1,30 @@
 package cebwrPackage;
+import java.math.BigInteger;
 
 public class Problem015 {
 
 	/**
 	 * @param args
 	 */
+	
+	public static final int len = 20 + 1;
+	
 	public static void main(String[] args) {
-		int x = 2;
-		int count = 0;
-		int[][] grid = new int[x+1][x+1];
-		for (int r = 0; r < x+1; r++)
-			for (int c = 0; c < x+1; c++)
-				count++;
+		BigInteger count = move(0, 0);
+		
+		System.out.println(count);
 	}
 	
-	public static void move() {
-		
+	public static BigInteger move(int x, int y) {
+		if (x == len - 1 && y == len - 1)
+			return BigInteger.ONE;
+		if (x >= len || y >= len)
+			return BigInteger.ZERO;
+		if (x < len - 1 && y < len - 1)
+			return move(x+1, y).add(move(x, y+1));
+		if (x < len - 1)
+			return move(x+1, y);
+		return move(x, y+1);
 	}
 
 }

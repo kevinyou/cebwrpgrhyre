@@ -18,7 +18,7 @@ public class Problem007 {
 			}
 			if (prime)
 			{
-				System.out.println(i);
+//				System.out.println(i);
 				recent = i;
 				count++;
 			}

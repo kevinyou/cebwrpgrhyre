@@ -3,7 +3,8 @@ package cebwrPackage;
 public class Problem005 {
 	public static void main(String[] args) {
 		int start = 1;
-		int end = 20;
+//		int end = 20;
+		int end = 5;
 		
 		int[] masterList = new int[end + 1];
 		for (int composite = start; composite <= end; composite++)

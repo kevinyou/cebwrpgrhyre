@@ -1,36 +1,54 @@
-/**	Java competition problem template
- *	Use for input/output problems
- */
-
 package cebwrPackage;
 
-import java.io.*;
 import java.util.*;
 
-public class Problem012 {
-	public static void main(String[] args) throws IOException
-	{
-		int threshold = 500;
-		int currentNumD = 0;
-		TreeSet<Integer> divisors = new TreeSet<>();
+public class Problem021 {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		
-		for (int i = 1; divisors.size() < threshold; i++)
+		int sum = 0;
+		
+		for (int i = 2; i < 10000; i++)
 		{
-			int tri = triangle(i);
-			divisors = getDivisors(tri);
-			System.out.println(tri + "\t" + divisors);
-			
+			int query = isAmicable(i);
+			if (query != -1)
+				sum += query + i;
 		}
 		
+		sum /= 2;
+		System.out.println(sum);
+		
+		
+//		System.out.println(isAmicable(220));
 		
 		
 	}
 	
-	public static int triangle(int term)
+	private static int isAmicable (int n)
 	{
-		return (term * (term + 1)) / 2;
+		TreeSet<Integer> set = getDivisors(n);
+		
+		int sum = -1 * n;
+		for (int x : set)
+			sum += x;
+		
+		TreeSet<Integer> set2 = getDivisors(sum);
+		
+		int sum2 = -1 * sum;
+		for (int x : set2)
+			sum2 += x;
+		
+		
+		if (sum2 == n && n != sum)
+			return sum;
+		
+		return -1;
 	}
 	
+
 	public static TreeSet getDivisors(int n)
 	{
 		TreeSet<Integer> returning = new TreeSet<Integer>();
@@ -58,4 +76,6 @@ public class Problem012 {
 	}
 	
 	public static HashMap<Integer, TreeSet<Integer>> history = new HashMap<>();
+	
+	
 }

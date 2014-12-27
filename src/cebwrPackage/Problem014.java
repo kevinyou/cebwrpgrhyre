@@ -1,47 +1,77 @@
 package cebwrPackage;
 
-import java.util.ArrayList;
+// solved with code from a UVa problem, #100 "The 3n + 1 problem"
+import java.io.*;
+import java.util.*;
 
 public class Problem014 {
-	public static void main(String[] args) {
-		int max = 1000000;
-		int greatest = Integer.MIN_VALUE;
-		int[] next = new int[5*max];
-		int answer = 1;
-		for (int i = 1; i <= max; i++)
+
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		
+		HashMap<Long, Long> map = new HashMap<Long, Long>();
+		
+		while (sc.hasNext())
 		{
-			int test = i;
-			int count = 0;
-			System.out.print(test + ": ");
-			while (next[test] != 0)
+			int n1 = sc.nextInt();
+			int n2 = sc.nextInt();
+			
+			int bot = Math.min(n1, n2);
+			int top = Math.max(n1, n2);
+			long maxLength = -1;
+			
+			for (long i = bot; i <= top; i++)
 			{
-				test = next[test];
-				count++;
-			}
-			boolean ran = false;
-			while (test != 1)
-			{
-				test = makeStep(test);
-				count++;
-				ran = true;
-				System.out.print(test + " ");
+				long n = i;
+				long count = 1;
+				
+				while (n != 1)
+				{
+					if (n % 2 == 0)
+					{
+						if (map.containsKey(n/2))
+						{
+							count += map.get(n/2);
+							n = 1;
+						}
+						else
+						{
+							n /= 2;
+							count++;
+						}
+					}
+					else
+					{
+						if (map.containsKey(3*n+1))
+						{
+							count += map.get(3*n+1);
+							n = 1;
+						}
+						else
+						{
+							n = 3 * n + 1;
+							count++;
+						}
+					}
+				}
+				map.put(i, count);
 			}
 			
-			System.out.println();
-			if (count > greatest)
+			int culprit = -1;
+			
+			for (int i = bot; i <= top; i++)
 			{
-				greatest = count;
-				answer = i;
+				long l = map.get((long) i);
+				if (l > maxLength)
+				{
+					maxLength = l;
+					culprit = i;
+				}
 			}
+			
+			System.out.printf("%d %d %d %d\n", n1, n2, maxLength, culprit);
 		}
-		System.out.println(answer);
 	}
 
-	public static int makeStep(int on) {
-		String check = "" + on;
-		if (Integer.parseInt(check.substring(check.length() - 1)) % 2 == 0)
-			return (on/2);
-		else
-			return 3*on + 1;
-	}
 }
+
